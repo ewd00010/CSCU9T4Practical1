@@ -43,7 +43,7 @@ public class TrainingRecord {
                     multiResult = current.getEntry();
                     firstIter = false;
                 } else {
-                    multiResult = multiResult + " ¦¦ " + current.getEntry();
+                    multiResult = multiResult + current.getEntry();
                 }
             }
         }

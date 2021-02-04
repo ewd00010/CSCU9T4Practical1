@@ -25,7 +25,9 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
     private JLabel labmm = new JLabel(" Mins:");
     private JLabel labs = new JLabel(" Secs:");
     private JLabel labdist = new JLabel(" Distance (km):");
-    private JButton addR = new JButton("Add");
+    private JButton addRun = new JButton("Add Run");
+    private JButton addSwim = new JButton("Add Swim");
+    private JButton addCycle = new JButton("Add Cycle");
     private JButton lookUpByDate = new JButton("Look Up");
     private JButton findAllByDate = new JButton("Find All");
 
@@ -65,8 +67,12 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         add(labdist);
         add(dist);
         dist.setEditable(true);
-        add(addR);
-        addR.addActionListener(this);
+        add(addRun);
+        addRun.addActionListener(this);
+        add(addSwim);
+        addSwim.addActionListener(this);
+        add(addCycle);
+        addCycle.addActionListener(this);
         add(lookUpByDate);
         lookUpByDate.addActionListener(this);
         add(outputArea);
@@ -85,8 +91,14 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
     // listen for and respond to GUI events 
     public void actionPerformed(ActionEvent event) {
         String message = "";
-        if (event.getSource() == addR) {
-            message = addEntry("generic");
+        if (event.getSource() == addRun) {
+            message = addRunEntry("generic");
+        }
+        if (event.getSource() == addSwim) {
+            message = addSwimEntry("generic");
+        }
+        if (event.getSource() == addCycle) {
+            message = addCycleEntry("generic");
         }
         if (event.getSource() == lookUpByDate) {
             message = lookupEntry();
@@ -98,7 +110,7 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         blankDisplay();
     } // actionPerformed
 
-    public String addEntry(String what) {
+    public String addRunEntry(String what) {
         String message = "Record added\n";
         System.out.println("Adding "+what+" entry to the records");
         String n = name.getText();
@@ -109,8 +121,38 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         int h = Integer.parseInt(hours.getText());
         int mm = Integer.parseInt(mins.getText());
         int s = Integer.parseInt(secs.getText());
-        Entry e = new Entry(n, d, m, y, h, mm, s, km);
-        myAthletes.addEntry(e);
+        RunEntry run = new RunEntry(n, d, m, y, h, mm, s, km);
+        myAthletes.addRunEntry(run);
+        return message;
+    }
+    public String addSwimEntry(String what) {
+        String message = "Record added\n";
+        System.out.println("Adding "+what+" entry to the records");
+        String n = name.getText();
+        int m = Integer.parseInt(month.getText());
+        int d = Integer.parseInt(day.getText());
+        int y = Integer.parseInt(year.getText());
+        float km = java.lang.Float.parseFloat(dist.getText());
+        int h = Integer.parseInt(hours.getText());
+        int mm = Integer.parseInt(mins.getText());
+        int s = Integer.parseInt(secs.getText());
+        SwimmingEntry swim = new SwimmingEntry(n, d, m, y, h, mm, s, km);
+        myAthletes.addSwimEntry(swim);
+        return message;
+    }
+    public String addCycleEntry(String what) {
+        String message = "Record added\n";
+        System.out.println("Adding "+what+" entry to the records");
+        String n = name.getText();
+        int m = Integer.parseInt(month.getText());
+        int d = Integer.parseInt(day.getText());
+        int y = Integer.parseInt(year.getText());
+        float km = java.lang.Float.parseFloat(dist.getText());
+        int h = Integer.parseInt(hours.getText());
+        int mm = Integer.parseInt(mins.getText());
+        int s = Integer.parseInt(secs.getText());
+        CycleEntry cycle = new CycleEntry(n, d, m, y, h, mm, s, km);
+        myAthletes.addCycleEntry(cycle);
         return message;
     }
     

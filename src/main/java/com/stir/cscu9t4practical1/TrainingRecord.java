@@ -5,45 +5,96 @@ import java.util.*;
 
 public class TrainingRecord {
 
-    private List<Entry> tr;
+    private List<RunEntry> runTR;
+    private List<SwimmingEntry> swimTR;
+    private List<CycleEntry> cycleTR;
 
     public TrainingRecord() {
-        tr = new ArrayList<Entry>();
+        runTR = new ArrayList<RunEntry>();
+        swimTR = new ArrayList<SwimmingEntry>();
+        cycleTR = new ArrayList<CycleEntry>();
+
     } //constructor
 
     // add a record to the list
-    public void addEntry(Entry e) {
-        tr.add(e);
+    public void addRunEntry(RunEntry run) {
+        runTR.add(run);
+    } // addClass
+
+    public void addSwimEntry(SwimmingEntry swim) {
+        swimTR.add(swim);
+    } // addClass
+
+    public void addCycleEntry(CycleEntry cycle) {
+        cycleTR.add(cycle);
     } // addClass
 
     // look up the entry of a given day and month
-    public String lookupEntry(int d, int m, int y) {
-        ListIterator<Entry> iter = tr.listIterator();
+    public String lookupEntry(int d, int m, int y) { // to be fixed, add type select gui maybe
+        ListIterator<RunEntry> runIter = runTR.listIterator();
+        ListIterator<SwimmingEntry> swimIter = swimTR.listIterator();
+        ListIterator<CycleEntry> cycleIter = cycleTR.listIterator();
         String result = "No entries found";
-        while (iter.hasNext()) {
-            Entry current = iter.next();
+        while (runIter.hasNext()) {
+            RunEntry current = runIter.next();
             if (current.getDay() == d && current.getMonth() == m && current.getYear() == y) {
-                result = current.getEntry();
+                result = current.getRunEntry();
+            }
+        }
+        while (swimIter.hasNext()) {
+            SwimmingEntry current = swimIter.next();
+            if (current.getDay() == d && current.getMonth() == m && current.getYear() == y) {
+                result = current.getSwimEntry();
+            }
+        }
+        while (cycleIter.hasNext()) {
+            CycleEntry current = cycleIter.next();
+            if (current.getDay() == d && current.getMonth() == m && current.getYear() == y) {
+                result = current.getCycleEntry();
             }
         }
         return result;
     } // lookupEntry
 
     public String findAllEntry(int d, int m, int y) {
-        ListIterator<Entry> iter = tr.listIterator();
+        ListIterator<RunEntry> runIter = runTR.listIterator();
+        ListIterator<SwimmingEntry> swimIter = swimTR.listIterator();
+        ListIterator<CycleEntry> cycleIter = cycleTR.listIterator();
 
         String result = "";
         String multiResult = "No entries found";
 
         boolean firstIter = true;
-        while (iter.hasNext()) {
-            Entry current = iter.next();
+        while (runIter.hasNext()) {
+            RunEntry current = runIter.next();
             if (current.getDay() == d && current.getMonth() == m && current.getYear() == y) {
                 if (firstIter == true) {
-                    multiResult = current.getEntry();
+                    multiResult = current.getRunEntry();
                     firstIter = false;
                 } else {
-                    multiResult = multiResult + current.getEntry();
+                    multiResult = multiResult + current.getRunEntry();
+                }
+            }
+        }
+         while (swimIter.hasNext()) {
+            SwimmingEntry current = swimIter.next();
+            if (current.getDay() == d && current.getMonth() == m && current.getYear() == y) {
+                if (firstIter == true) {
+                    multiResult = current.getSwimEntry();
+                    firstIter = false;
+                } else {
+                    multiResult = multiResult + current.getSwimEntry();
+                }
+            }
+        }
+          while (cycleIter.hasNext()) {
+            CycleEntry current = cycleIter.next();
+            if (current.getDay() == d && current.getMonth() == m && current.getYear() == y) {
+                if (firstIter == true) {
+                    multiResult = current.getCycleEntry();
+                    firstIter = false;
+                } else {
+                    multiResult = multiResult + current.getCycleEntry();
                 }
             }
         }
@@ -53,12 +104,15 @@ public class TrainingRecord {
 
     // Count the number of entries
     public int getNumberOfEntries() {
-        return tr.size();
+        int numberOfEntries = runTR.size() + swimTR.size() + cycleTR.size();
+        return numberOfEntries;
     }
     // Clear all entries
 
     public void clearAllEntries() {
-        tr.clear();
+        runTR.clear();
+        swimTR.clear();
+        cycleTR.clear();
     }
 
 } // TrainingRecord

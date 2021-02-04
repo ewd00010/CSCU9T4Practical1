@@ -22,12 +22,36 @@ public class TrainingRecord {
     } // addClass
 
     public void addSwimEntry(SwimmingEntry swim) {
-        swimTR.add(swim);
+            swimTR.add(swim);
     } // addClass
 
     public void addCycleEntry(CycleEntry cycle) {
         cycleTR.add(cycle);
     } // addClass
+    public void removeEntry(String n, int d, int m, int y)
+    {
+        ListIterator<RunEntry> runIter = runTR.listIterator();
+        ListIterator<SwimmingEntry> swimIter = swimTR.listIterator();
+        ListIterator<CycleEntry> cycleIter = cycleTR.listIterator();
+        while (runIter.hasNext()) {
+            RunEntry current = runIter.next();
+            if (current.getName().equals(n) && current.getDay() == d && current.getMonth() == m && current.getYear() == y) {
+                runIter.remove();
+            }
+        }
+        while (swimIter.hasNext()) {
+            SwimmingEntry current = swimIter.next();
+            if (current.getName().equals(n) && current.getDay() == d && current.getMonth() == m && current.getYear() == y) {
+                swimIter.remove();
+            }
+        }
+        while (cycleIter.hasNext()) {
+            CycleEntry current = cycleIter.next();
+            if (current.getName().equals(n) && current.getDay() == d && current.getMonth() == m && current.getYear() == y) {
+                cycleIter.remove();
+            }
+        }
+    }
 
     // look up the entry of a given day and month
     public String lookupEntry(int d, int m, int y) { // to be fixed, add type select gui maybe
@@ -101,6 +125,7 @@ public class TrainingRecord {
         result = multiResult;
         return result;
     } // findAllEntry
+    
 
     // Count the number of entries
     public int getNumberOfEntries() {
@@ -108,7 +133,6 @@ public class TrainingRecord {
         return numberOfEntries;
     }
     // Clear all entries
-
     public void clearAllEntries() {
         runTR.clear();
         swimTR.clear();

@@ -28,12 +28,15 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
     private JButton addRun = new JButton("Add Run");
     private JButton addSwim = new JButton("Add Swim");
     private JButton addCycle = new JButton("Add Cycle");
+    private JButton remove = new JButton("remove entry");
     private JButton lookUpByDate = new JButton("Look Up");
     private JButton findAllByDate = new JButton("Find All");
 
     private TrainingRecord myAthletes = new TrainingRecord();
 
     private JTextArea outputArea = new JTextArea(5, 50);
+    
+    private boolean onlyOneEntry = true;
 
     public static void main(String[] args) {
         TrainingRecordGUI applic = new TrainingRecordGUI();
@@ -73,6 +76,8 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         addSwim.addActionListener(this);
         add(addCycle);
         addCycle.addActionListener(this);
+        add(remove);
+        remove.addActionListener(this);
         add(lookUpByDate);
         lookUpByDate.addActionListener(this);
         add(outputArea);
@@ -100,6 +105,9 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         if (event.getSource() == addCycle) {
             message = addCycleEntry("generic");
         }
+        if (event.getSource() == remove) {
+            message = removeEntry("generic");
+        }
         if (event.getSource() == lookUpByDate) {
             message = lookupEntry();
         }
@@ -111,7 +119,7 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
     } // actionPerformed
 
     public String addRunEntry(String what) {
-        String message = "Record added\n";
+        String message = "Record already added\n";
         System.out.println("Adding "+what+" entry to the records");
         String n = name.getText();
         int m = Integer.parseInt(month.getText());
@@ -122,11 +130,18 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         int mm = Integer.parseInt(mins.getText());
         int s = Integer.parseInt(secs.getText());
         RunEntry run = new RunEntry(n, d, m, y, h, mm, s, km);
-        myAthletes.addRunEntry(run);
+        TrainingRecord RecordCheck = new TrainingRecord();
+        RecordCheck.addRunEntry(run);
+        if(RecordCheck.equals(myAthletes) || onlyOneEntry == true)
+        {
+            myAthletes.addRunEntry(run);
+            message = "Record added\n";
+            onlyOneEntry = false;
+        }
         return message;
     }
     public String addSwimEntry(String what) {
-        String message = "Record added\n";
+        String message = "Record already added\n";
         System.out.println("Adding "+what+" entry to the records");
         String n = name.getText();
         int m = Integer.parseInt(month.getText());
@@ -137,11 +152,18 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         int mm = Integer.parseInt(mins.getText());
         int s = Integer.parseInt(secs.getText());
         SwimmingEntry swim = new SwimmingEntry(n, d, m, y, h, mm, s, km);
-        myAthletes.addSwimEntry(swim);
+        TrainingRecord RecordCheck = new TrainingRecord();
+        RecordCheck.addSwimEntry(swim);
+        if(RecordCheck.equals(myAthletes) || onlyOneEntry == true)
+        {
+            myAthletes.addSwimEntry(swim);
+            message = "Record added\n";
+            onlyOneEntry = false;
+        }
         return message;
     }
     public String addCycleEntry(String what) {
-        String message = "Record added\n";
+        String message = "Record already added\n";
         System.out.println("Adding "+what+" entry to the records");
         String n = name.getText();
         int m = Integer.parseInt(month.getText());
@@ -152,7 +174,29 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         int mm = Integer.parseInt(mins.getText());
         int s = Integer.parseInt(secs.getText());
         CycleEntry cycle = new CycleEntry(n, d, m, y, h, mm, s, km);
-        myAthletes.addCycleEntry(cycle);
+        TrainingRecord RecordCheck = new TrainingRecord();
+        RecordCheck.addCycleEntry(cycle);
+        if(RecordCheck.equals(myAthletes) || onlyOneEntry == true)
+        {
+            myAthletes.addCycleEntry(cycle);
+            message = "Record added\n";
+            onlyOneEntry = false;
+        }
+        return message;
+    }
+    public String removeEntry(String what) {
+        String message = "Record removed\n";
+        System.out.println("removing "+what+" entry from the records");
+        String n = name.getText();
+        int m = Integer.parseInt(month.getText());
+        int d = Integer.parseInt(day.getText());
+        int y = Integer.parseInt(year.getText());
+        TrainingRecord RecordCheck = new TrainingRecord();
+        RecordCheck.removeEntry(n, d, m, y); 
+        if(RecordCheck.equals(myAthletes) == false)
+        {
+            myAthletes.removeEntry(n, d, m, y);
+        }
         return message;
     }
     

@@ -15,13 +15,15 @@ public class SwimmingEntry { //change to SwimEntry after changing class name and
     private String name;
   private Calendar dateAndTime;
   private float distance;
+  private String where;
   
-  public SwimmingEntry (String n, int d, int m, int y, int h, int min, int s, float dist) {
+  public SwimmingEntry (String n, int d, int m, int y, int h, int min, int s, float dist, String whe) {
     name = n;
     Calendar inst = Calendar.getInstance();
     inst.set(y,m-1,d,h,min,s);
     dateAndTime = inst;
     distance = dist;
+    where = whe;
   } //constructor
   
   public String getName () {
@@ -56,11 +58,15 @@ public class SwimmingEntry { //change to SwimEntry after changing class name and
   public float getSwimDistance () {
     return distance;
   } //getYear
+  public String getWhere() {
+      return where;
+  }
 
   public String getSwimEntry () {
    String result = getName()+" swam " + getSwimDistance() + " km in "
              +getHour()+":"+getMin()+":"+ getSec() + " on "
-             +getDay()+"/"+getMonth()+"/"+getYear()+"\n";
+             +getDay()+"/"+getMonth()+"/"+getYear()
+             +" location: " + getWhere() + ". \n";
    return result;
   } //getEntry
 }

@@ -15,13 +15,17 @@ public class CycleEntry {
      private String name;
   private Calendar dateAndTime;
   private float distance;
+  private String surface;
+  private String speed;
   
-  public CycleEntry (String n, int d, int m, int y, int h, int min, int s, float dist) {
+  public CycleEntry (String n, int d, int m, int y, int h, int min, int s, float dist, String sf, String sp) {
     name = n;
     Calendar inst = Calendar.getInstance();
     inst.set(y,m-1,d,h,min,s);
     dateAndTime = inst;
     distance = dist;
+    surface = sf;
+    speed = sp;
   } //constructor
   
   public String getName () {
@@ -56,11 +60,19 @@ public class CycleEntry {
   public float getCycleDistance () {
     return distance;
   } //getYear
+  public String getSurface() {
+      return surface;
+  }
+  public String getSpeed() {
+      return speed;
+  }
 
   public String getCycleEntry () {
-   String result = getName()+" Cycled " + getCycleDistance() + " km in "
+   String result = getName()+" cycled " + getCycleDistance() + " km in "
              +getHour()+":"+getMin()+":"+ getSec() + " on "
-             +getDay()+"/"+getMonth()+"/"+getYear()+"\n";
+             +getDay()+ "/" +getMonth() + "/" +getYear() 
+             +" on surface: " + getSurface() 
+             +" at " + getSpeed() + " kmph. \n";
    return result;
   } //getEntry
 }

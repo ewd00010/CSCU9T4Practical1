@@ -15,13 +15,17 @@ public class RunEntry {
   private String name;
   private Calendar dateAndTime;
   private float distance;
+  private int repetitions;
+  private int recovery;
   
-  public RunEntry (String n, int d, int m, int y, int h, int min, int s, float dist) {
+  public RunEntry (String n, int d, int m, int y, int h, int min, int s, float dist, int rep, int rec) {
     name = n;
     Calendar inst = Calendar.getInstance();
     inst.set(y,m-1,d,h,min,s);
     dateAndTime = inst;
     distance = dist;
+    repetitions = rep;
+    recovery = rec;
   } //constructor
   
   public String getName () {
@@ -56,11 +60,20 @@ public class RunEntry {
   public float getRunDistance () {
     return distance;
   } //getYear
+  
+  public int getRepetitions() {
+      return repetitions;
+  }
+  public int getRecovery() {
+      return recovery;
+  }
 
   public String getRunEntry () {
    String result = getName()+" ran " + getRunDistance() + " km in "
              +getHour()+":"+getMin()+":"+ getSec() + " on "
-             +getDay()+"/"+getMonth()+"/"+getYear()+"\n";
+             +getDay()+"/"+getMonth()+"/"+getYear()
+             + " Repetitions: " + getRepetitions() 
+             + " Recovery Time: "+ getRecovery() + " minutes. \n";
    return result;
   } //getEntry
 }

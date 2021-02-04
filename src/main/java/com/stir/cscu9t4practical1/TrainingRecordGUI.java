@@ -17,6 +17,11 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
     private JTextField mins = new JTextField(2);
     private JTextField secs = new JTextField(2);
     private JTextField dist = new JTextField(4);
+    private JTextField surface = new JTextField(20);
+    private JTextField speed = new JTextField(4);
+    private JTextField repetitions = new JTextField(4);
+    private JTextField recovery = new JTextField(3);
+    private JTextField where = new JTextField(30);
     private JLabel labn = new JLabel(" Name:");
     private JLabel labd = new JLabel(" Day:");
     private JLabel labm = new JLabel(" Month:");
@@ -25,10 +30,15 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
     private JLabel labmm = new JLabel(" Mins:");
     private JLabel labs = new JLabel(" Secs:");
     private JLabel labdist = new JLabel(" Distance (km):");
+    private JLabel labsf = new JLabel (" on Surface:");
+    private JLabel labsp = new JLabel (" at speed (kmph):");
+    private JLabel labrep = new JLabel(" repetitions:");
+    private JLabel labrec = new JLabel("recovery (mins):");
+    private JLabel labwhe = new JLabel("location:");
     private JButton addRun = new JButton("Add Run");
     private JButton addSwim = new JButton("Add Swim");
     private JButton addCycle = new JButton("Add Cycle");
-    private JButton remove = new JButton("remove entry");
+    private JButton removeEntry = new JButton("remove entry");
     private JButton lookUpByDate = new JButton("Look Up");
     private JButton findAllByDate = new JButton("Find All");
 
@@ -70,14 +80,26 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         add(labdist);
         add(dist);
         dist.setEditable(true);
+        add(labsf);
+        add(surface);
+        surface.setEditable(true);
+        add(labsp);
+        add(speed);
+        speed.setEditable(true);
+        add(labrep);
+        add(repetitions);
+        repetitions.setEditable(true);
+        add(labrec);
+        add(recovery);
+        recovery.setEditable(true);
         add(addRun);
         addRun.addActionListener(this);
         add(addSwim);
         addSwim.addActionListener(this);
         add(addCycle);
         addCycle.addActionListener(this);
-        add(remove);
-        remove.addActionListener(this);
+        add(removeEntry);
+        removeEntry.addActionListener(this);
         add(lookUpByDate);
         lookUpByDate.addActionListener(this);
         add(outputArea);
@@ -105,7 +127,7 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         if (event.getSource() == addCycle) {
             message = addCycleEntry("generic");
         }
-        if (event.getSource() == remove) {
+        if (event.getSource() == removeEntry) {
             message = removeEntry("generic");
         }
         if (event.getSource() == lookUpByDate) {
@@ -129,13 +151,15 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         int h = Integer.parseInt(hours.getText());
         int mm = Integer.parseInt(mins.getText());
         int s = Integer.parseInt(secs.getText());
-        RunEntry run = new RunEntry(n, d, m, y, h, mm, s, km);
+        int rep = Integer.parseInt(repetitions.getText());
+        int rec = Integer.parseInt(recovery.getText());
+        RunEntry run = new RunEntry(n, d, m, y, h, mm, s, km, rep, rec);
         TrainingRecord RecordCheck = new TrainingRecord();
         RecordCheck.addRunEntry(run);
-        if(RecordCheck.equals(myAthletes) || onlyOneEntry == true)
+        if(RecordCheck.equals(myAthletes) || onlyOneEntry == true) // this format doesn't work now different variables added for different Entry Collections
         {
             myAthletes.addRunEntry(run);
-            message = "Record added\n";
+            message = " Record added\n";
             onlyOneEntry = false;
         }
         return message;
@@ -151,13 +175,14 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         int h = Integer.parseInt(hours.getText());
         int mm = Integer.parseInt(mins.getText());
         int s = Integer.parseInt(secs.getText());
-        SwimmingEntry swim = new SwimmingEntry(n, d, m, y, h, mm, s, km);
+        String whe = where.getText();
+        SwimmingEntry swim = new SwimmingEntry(n, d, m, y, h, mm, s, km, whe);
         TrainingRecord RecordCheck = new TrainingRecord();
         RecordCheck.addSwimEntry(swim);
         if(RecordCheck.equals(myAthletes) || onlyOneEntry == true)
         {
             myAthletes.addSwimEntry(swim);
-            message = "Record added\n";
+            message = " Record added\n";
             onlyOneEntry = false;
         }
         return message;
@@ -173,13 +198,15 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         int h = Integer.parseInt(hours.getText());
         int mm = Integer.parseInt(mins.getText());
         int s = Integer.parseInt(secs.getText());
-        CycleEntry cycle = new CycleEntry(n, d, m, y, h, mm, s, km);
+        String sf = surface.getText();
+        String sp = speed.getText();
+        CycleEntry cycle = new CycleEntry(n, d, m, y, h, mm, s, km, sf, sp);
         TrainingRecord RecordCheck = new TrainingRecord();
         RecordCheck.addCycleEntry(cycle);
         if(RecordCheck.equals(myAthletes) || onlyOneEntry == true)
         {
             myAthletes.addCycleEntry(cycle);
-            message = "Record added\n";
+            message = " Record added\n";
             onlyOneEntry = false;
         }
         return message;
@@ -230,7 +257,7 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
 
     }// blankDisplay
     // Fills the input fields on the display for testing purposes only
-    public void fillDisplay(Entry ent) {
+    public void fillRunDisplay(RunEntry ent) {
         name.setText(ent.getName());
         day.setText(String.valueOf(ent.getDay()));
         month.setText(String.valueOf(ent.getMonth()));
@@ -238,8 +265,32 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         hours.setText(String.valueOf(ent.getHour()));
         mins.setText(String.valueOf(ent.getMin()));
         secs.setText(String.valueOf(ent.getSec()));
-        dist.setText(String.valueOf(ent.getDistance()));
+        dist.setText(String.valueOf(ent.getRunDistance()));
+        repetitions.setText(String.valueOf(ent.getRepetitions()));
+        recovery.setText(String.valueOf(ent.getRecovery()));    
     }
-
+    public void fillSwimDisplay(SwimmingEntry ent) {
+        name.setText(ent.getName());
+        day.setText(String.valueOf(ent.getDay()));
+        month.setText(String.valueOf(ent.getMonth()));
+        year.setText(String.valueOf(ent.getYear()));
+        hours.setText(String.valueOf(ent.getHour()));
+        mins.setText(String.valueOf(ent.getMin()));
+        secs.setText(String.valueOf(ent.getSec()));
+        dist.setText(String.valueOf(ent.getSwimDistance()));
+        where.setText(ent.getWhere()); 
+    }
+    public void fillCycleDisplay(CycleEntry ent) {
+        name.setText(ent.getName());
+        day.setText(String.valueOf(ent.getDay()));
+        month.setText(String.valueOf(ent.getMonth()));
+        year.setText(String.valueOf(ent.getYear()));
+        hours.setText(String.valueOf(ent.getHour()));
+        mins.setText(String.valueOf(ent.getMin()));
+        secs.setText(String.valueOf(ent.getSec()));
+        dist.setText(String.valueOf(ent.getCycleDistance()));
+        surface.setText(ent.getSurface());
+        speed.setText(ent.getSpeed());    
+    }
 } // TrainingRecordGUI
 

@@ -85,14 +85,34 @@ public class TrainingRecordGUITest {
      * 
      */
     @Test
-    public void testAddEntry(){
-        System.out.println("addEntry");
+    public void testAddRunEntry(){
+        System.out.println("addRunEntry");
         TrainingRecordGUI instance = new TrainingRecordGUI();
-        Entry entry = new Entry("Alice", 1, 2, 2003, 0, 16, 7, 3);
-        instance.fillDisplay(entry);
-        String message = instance.addEntry("generic");
+        RunEntry runEntry = new RunEntry("Alice", 1, 2, 2003, 0, 16, 7, 3, 9, 8);
+        instance.fillRunDisplay(runEntry);
+        String message = instance.addRunEntry("generic");
         System.out.println(message);
-        assertEquals(message,"Record added\n");
+        assertEquals(message," Record added\n");
+    }
+    @Test
+    public void testAddSwimEntry(){
+        System.out.println("addSwimEntry");
+        TrainingRecordGUI instance = new TrainingRecordGUI();
+        SwimmingEntry swimEntry = new SwimmingEntry("Alice", 1, 2, 2003, 0, 16, 7, 3, "outdoors");
+        instance.fillSwimDisplay(swimEntry);
+        String message = instance.addSwimEntry("generic");
+        System.out.println(message);
+        assertEquals(message," Record added\n");
+    }
+    @Test
+    public void testAddCycleEntry(){
+        System.out.println("addCycleEntry");
+        TrainingRecordGUI instance = new TrainingRecordGUI();
+        CycleEntry cycleEntry = new CycleEntry("Alice", 1, 2, 2003, 0, 16, 7, 3, "grass", "moderate");
+        instance.fillCycleDisplay(cycleEntry);
+        String message = instance.addCycleEntry("generic");
+        System.out.println(message);
+        assertEquals(message," Record added\n");
     }
     
     /**
@@ -103,7 +123,7 @@ public class TrainingRecordGUITest {
         System.out.println("Check if you have added the buttons"); 
         TrainingRecordGUI instance = new TrainingRecordGUI();
         Class<?> instanceClass = instance.getClass();
-        String[] expectedFields = {"findAllByDate","lookUpByDate"}; // add RemoveEntry when it is ready
+        String[] expectedFields = {"findAllByDate","lookUpByDate","removeEntry"}; // add RemoveEntry when it is ready
         Field fields[] = instanceClass.getDeclaredFields();
         int found = 0;
         for (Field field : fields) {

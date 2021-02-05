@@ -35,16 +35,23 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
     private JLabel labrep = new JLabel(" repetitions:");
     private JLabel labrec = new JLabel("recovery (mins):");
     private JLabel labwhe = new JLabel("location:");
+    private JButton addRunInput = new JButton("Create Run Record");
+    private JButton addSwimInput = new JButton("Create Swimming Record");
+    private JButton addCycleInput = new JButton("Create Cycle Record");
+    private JButton addRemoveInput = new JButton("Remove A Record");
+    private JButton addLookUpByDateInput = new JButton("Look Up Record By Date");
+    private JButton addFindAllByDateInput = new JButton("Find All Records By Date");
     private JButton addRun = new JButton("Add Run");
     private JButton addSwim = new JButton("Add Swim");
     private JButton addCycle = new JButton("Add Cycle");
     private JButton removeEntry = new JButton("remove entry");
-    private JButton lookUpByDate = new JButton("Look Up");
-    private JButton findAllByDate = new JButton("Find All");
+    private JButton lookUpByDate = new JButton("Look Up By Date");
+    private JButton findAllByDate = new JButton("Find All By Date");
+    
 
     private TrainingRecord myAthletes = new TrainingRecord();
 
-    private JTextArea outputArea = new JTextArea(5, 50);
+    private JTextArea outputArea = new JTextArea(14, 50);
     
     private boolean onlyOneEntry = true;
 
@@ -92,6 +99,12 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         add(labrec);
         add(recovery);
         recovery.setEditable(true);
+        add(addRunInput);
+        addRunInput.addActionListener(this);
+        add(addSwimInput);
+        addSwimInput.addActionListener(this);
+        add(addCycleInput);
+        addCycleInput.addActionListener(this);
         add(addRun);
         addRun.addActionListener(this);
         add(addSwim);
@@ -102,14 +115,60 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         removeEntry.addActionListener(this);
         add(lookUpByDate);
         lookUpByDate.addActionListener(this);
-        add(outputArea);
-        findAllByDate.addActionListener(this);
         add(findAllByDate);
+        findAllByDate.addActionListener(this);
+        add(addRemoveInput);
+        addRemoveInput.addActionListener(this);
+        add(addLookUpByDateInput);
+        addLookUpByDateInput.addActionListener(this);
+        add(addFindAllByDateInput);
+        addFindAllByDateInput.addActionListener(this);
+        add(outputArea);
         outputArea.setEditable(false);
-        setSize(720, 200);
+        setSize(720, 400);
         setVisible(true);
         blankDisplay();
-
+        
+        /*
+        sorry for how expansive the follow blocks of code are, at a later point i'll probably change these
+        blocks to work with an iterator to remove around 300 lines of code into a nice at most 60 lines worth of iterators
+        but i'm running short on time and getting an iterator to work would probably take a good couple hours
+        */
+        //setting textbox inputs to not show
+        findAllByDate.setVisible(false);
+        lookUpByDate.setVisible(false);
+        removeEntry.setVisible(false);
+        addRun.setVisible(false);
+        addSwim.setVisible(false);
+        addCycle.setVisible(false);
+        name.setVisible(false);
+        day.setVisible(false); 
+        month.setVisible(false);
+        year.setVisible(false);
+        hours.setVisible(false); 
+        mins.setVisible(false); 
+        secs.setVisible(false); 
+        dist.setVisible(false); 
+        surface.setVisible(false);
+        speed.setVisible(false);
+        recovery.setVisible(false);
+        repetitions.setVisible(false);
+        where.setVisible(false);
+        //setting text input descriptors to not show
+        labn.setVisible(false); 
+        labd.setVisible(false); 
+        labm.setVisible(false); 
+        laby.setVisible(false); 
+        labh.setVisible(false); 
+        labmm.setVisible(false); 
+        labs.setVisible(false); 
+        labdist.setVisible(false);
+        labsf.setVisible(false); 
+        labsp.setVisible(false); 
+        labrep.setVisible(false);
+        labrec.setVisible(false);
+        labwhe.setVisible(false);
+        
         // To save typing in new entries while testing, uncomment
         // the following lines (or add your own test cases)
         
@@ -118,23 +177,282 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
     // listen for and respond to GUI events 
     public void actionPerformed(ActionEvent event) {
         String message = "";
+        
+        if (event.getSource() == addRunInput)
+        {
+            addRun.setVisible(true);
+            repetitions.setVisible(true);
+            recovery.setVisible(true);
+            name.setVisible(true);
+            day.setVisible(true); 
+            month.setVisible(true);
+            year.setVisible(true);
+            hours.setVisible(true); 
+            mins.setVisible(true); 
+            secs.setVisible(true); 
+            dist.setVisible(true);
+            labrep.setVisible(true);
+            labrec.setVisible(true);
+            labn.setVisible(true); 
+            labd.setVisible(true); 
+            labm.setVisible(true); 
+            laby.setVisible(true); 
+            labh.setVisible(true); 
+            labmm.setVisible(true); 
+            labs.setVisible(true); 
+            labdist.setVisible(true);
+            addRunInput.setVisible(false);
+            addSwimInput.setVisible(false);
+            addCycleInput.setVisible(false);
+            addRemoveInput.setVisible(false);
+            addLookUpByDateInput.setVisible(false);
+            addFindAllByDateInput.setVisible(false);
+        }
+        if (event.getSource() == addSwimInput)
+        {
+            addSwim.setVisible(true);
+            where.setVisible(true);
+            name.setVisible(true);
+            day.setVisible(true); 
+            month.setVisible(true);
+            year.setVisible(true);
+            hours.setVisible(true); 
+            mins.setVisible(true); 
+            secs.setVisible(true); 
+            dist.setVisible(true);
+            labwhe.setVisible(true);
+            labn.setVisible(true); 
+            labd.setVisible(true); 
+            labm.setVisible(true); 
+            laby.setVisible(true); 
+            labh.setVisible(true); 
+            labmm.setVisible(true); 
+            labs.setVisible(true); 
+            labdist.setVisible(true);
+            addRunInput.setVisible(false);
+            addSwimInput.setVisible(false);
+            addCycleInput.setVisible(false);
+            addRemoveInput.setVisible(false);
+            addLookUpByDateInput.setVisible(false);
+            addFindAllByDateInput.setVisible(false);
+        }
+        if (event.getSource() == addCycleInput)
+        {
+            labdist.setVisible(true);
+            addCycle.setVisible(true);
+            surface.setVisible(true);
+            speed.setVisible(true);
+            name.setVisible(true);
+            day.setVisible(true); 
+            month.setVisible(true);
+            year.setVisible(true);
+            hours.setVisible(true); 
+            mins.setVisible(true); 
+            secs.setVisible(true); 
+            dist.setVisible(true);
+            labsf.setVisible(true); 
+            labsp.setVisible(true); 
+            labn.setVisible(true); 
+            labd.setVisible(true); 
+            labm.setVisible(true); 
+            laby.setVisible(true); 
+            labh.setVisible(true); 
+            labmm.setVisible(true); 
+            labs.setVisible(true); 
+            addRunInput.setVisible(false);
+            addSwimInput.setVisible(false);
+            addCycleInput.setVisible(false);
+            addRemoveInput.setVisible(false);
+            addLookUpByDateInput.setVisible(false);
+            addFindAllByDateInput.setVisible(false); 
+        }
         if (event.getSource() == addRun) {
             message = addRunEntry("generic");
+            addRun.setVisible(false);
+            repetitions.setVisible(false);
+            recovery.setVisible(false);
+            name.setVisible(false);
+            day.setVisible(false); 
+            month.setVisible(false);
+            year.setVisible(false);
+            hours.setVisible(false); 
+            mins.setVisible(false); 
+            secs.setVisible(false); 
+            dist.setVisible(false); 
+            labrep.setVisible(false);
+            labrec.setVisible(false);
+            labn.setVisible(false); 
+            labd.setVisible(false); 
+            labm.setVisible(false); 
+            laby.setVisible(false); 
+            labh.setVisible(false); 
+            labmm.setVisible(false); 
+            labs.setVisible(false); 
+            labdist.setVisible(false);
+            addRunInput.setVisible(true);
+            addSwimInput.setVisible(true);
+            addCycleInput.setVisible(true);
+            addRemoveInput.setVisible(true);
+            addLookUpByDateInput.setVisible(true);
+            addFindAllByDateInput.setVisible(true);
         }
         if (event.getSource() == addSwim) {
             message = addSwimEntry("generic");
+            addSwim.setVisible(false);
+            where.setVisible(false);
+            name.setVisible(false);
+            day.setVisible(false); 
+            month.setVisible(false);
+            year.setVisible(false);
+            hours.setVisible(false); 
+            mins.setVisible(false); 
+            secs.setVisible(false); 
+            dist.setVisible(false);
+            labwhe.setVisible(false);
+            labn.setVisible(false); 
+            labd.setVisible(false); 
+            labm.setVisible(false); 
+            laby.setVisible(false); 
+            labh.setVisible(false); 
+            labmm.setVisible(false); 
+            labs.setVisible(false); 
+            labdist.setVisible(false);
+            addRunInput.setVisible(true);
+            addSwimInput.setVisible(true);
+            addCycleInput.setVisible(true);
+            addRemoveInput.setVisible(true);
+            addLookUpByDateInput.setVisible(true);
+            addFindAllByDateInput.setVisible(true);
         }
         if (event.getSource() == addCycle) {
             message = addCycleEntry("generic");
+            addCycle.setVisible(false);
+            surface.setVisible(false);
+            speed.setVisible(false);
+            name.setVisible(false);
+            day.setVisible(false); 
+            month.setVisible(false);
+            year.setVisible(false);
+            hours.setVisible(false); 
+            mins.setVisible(false); 
+            secs.setVisible(false); 
+            dist.setVisible(false);
+            labsf.setVisible(false); 
+            labsp.setVisible(false); 
+            labn.setVisible(false); 
+            labd.setVisible(false); 
+            labm.setVisible(false); 
+            laby.setVisible(false); 
+            labh.setVisible(false); 
+            labmm.setVisible(false); 
+            labs.setVisible(false); 
+            labdist.setVisible(false);
+            addRunInput.setVisible(true);
+            addSwimInput.setVisible(true);
+            addCycleInput.setVisible(true);
+            addRemoveInput.setVisible(true);
+            addLookUpByDateInput.setVisible(true);
+            addFindAllByDateInput.setVisible(true);
+        }
+        if (event.getSource() == addRemoveInput)
+        {
+            removeEntry.setVisible(true);
+            name.setVisible(true);
+            day.setVisible(true); 
+            month.setVisible(true);
+            year.setVisible(true);
+            labn.setVisible(true); 
+            labd.setVisible(true); 
+            labm.setVisible(true); 
+            laby.setVisible(true); 
+            addRunInput.setVisible(false);
+            addSwimInput.setVisible(false);
+            addCycleInput.setVisible(false);
+            addRemoveInput.setVisible(false);
+            addLookUpByDateInput.setVisible(false);
+            addFindAllByDateInput.setVisible(false); 
         }
         if (event.getSource() == removeEntry) {
             message = removeEntry("generic");
+            removeEntry.setVisible(false);
+            name.setVisible(false);
+            day.setVisible(false); 
+            month.setVisible(false);
+            year.setVisible(false);
+            labn.setVisible(false); 
+            labd.setVisible(false); 
+            labm.setVisible(false); 
+            laby.setVisible(false); 
+            addRunInput.setVisible(true);
+            addSwimInput.setVisible(true);
+            addCycleInput.setVisible(true);
+            addRemoveInput.setVisible(true);
+            addLookUpByDateInput.setVisible(true);
+            addFindAllByDateInput.setVisible(true);
+        }
+        if (event.getSource() == addLookUpByDateInput)
+        {
+            lookUpByDate.setVisible(true);
+            day.setVisible(true); 
+            month.setVisible(true);
+            year.setVisible(true);
+            labd.setVisible(true); 
+            labm.setVisible(true); 
+            laby.setVisible(true); 
+            addRunInput.setVisible(false);
+            addSwimInput.setVisible(false);
+            addCycleInput.setVisible(false);
+            addRemoveInput.setVisible(false);
+            addLookUpByDateInput.setVisible(false);
+            addFindAllByDateInput.setVisible(false); 
         }
         if (event.getSource() == lookUpByDate) {
             message = lookupEntry();
+            lookUpByDate.setVisible(false);
+            day.setVisible(false); 
+            month.setVisible(false);
+            year.setVisible(false);
+            labd.setVisible(false); 
+            labm.setVisible(false); 
+            laby.setVisible(false); 
+            addRunInput.setVisible(true);
+            addSwimInput.setVisible(true);
+            addCycleInput.setVisible(true);
+            addRemoveInput.setVisible(true);
+            addLookUpByDateInput.setVisible(true);
+            addFindAllByDateInput.setVisible(true);
         }
+        if (event.getSource() == addFindAllByDateInput)
+        {
+            findAllByDate.setVisible(true);
+            name.setVisible(true);
+            day.setVisible(true); 
+            month.setVisible(true);
+            labd.setVisible(true); 
+            labm.setVisible(true); 
+            laby.setVisible(true); 
+            addRunInput.setVisible(false);
+            addSwimInput.setVisible(false);
+            addCycleInput.setVisible(false);
+            addRemoveInput.setVisible(false);
+            addLookUpByDateInput.setVisible(false);
+            addFindAllByDateInput.setVisible(false); 
+        }        
         if (event.getSource() == findAllByDate) {
             message = findAllEntry();
+            findAllByDate.setVisible(false);
+            day.setVisible(false); 
+            month.setVisible(false);
+            year.setVisible(false);
+            labd.setVisible(false); 
+            labm.setVisible(false); 
+            laby.setVisible(false); 
+            addRunInput.setVisible(true);
+            addSwimInput.setVisible(true);
+            addCycleInput.setVisible(true);
+            addRemoveInput.setVisible(true);
+            addLookUpByDateInput.setVisible(true);
+            addFindAllByDateInput.setVisible(true);
         }
         outputArea.setText(message);
         blankDisplay();
@@ -246,6 +564,11 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
     }
 
     public void blankDisplay() {
+        recovery.setText("");
+        repetitions.setText("");
+        speed.setText("");
+        surface.setText("");
+        where.setText("");
         name.setText("");
         day.setText("");
         month.setText("");
